@@ -1,0 +1,12 @@
+{
+  "name": "sloplint-fixture-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fixture project used by SlopLint's own test suite. Not a real published package.",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
