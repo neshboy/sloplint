@@ -1,0 +1,46 @@
+{
+  "name": "sloplint",
+  "version": "0.1.0",
+  "description": "Static analysis linter that catches LLM-authored code smells: hallucinated imports and hallucinated standard-library API calls.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "sloplint": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "lint",
+    "static-analysis",
+    "llm",
+    "ai",
+    "hallucination",
+    "cli"
+  ],
+  "author": "SlopLint contributors",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@typescript-eslint/typescript-estree": "^8.70.1",
+    "chalk": "^6.0.0",
+    "commander": "^15.0.0",
+    "fast-glob": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.1"
+  }
+}
