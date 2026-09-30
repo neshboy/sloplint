@@ -50,6 +50,13 @@ describe('scan()', () => {
       expect(findings[0].message).toContain('readFileSyncSuperFast');
       expect(findings[0].line).toBe(6);
     });
+
+    it('does NOT flag type-only named imports of covered builtins (import type {...} and import { type X })', () => {
+      // good-api.ts imports `PathLike` and `Stats` from 'node:fs', neither of which
+      // exists on the runtime API surface - only real named imports should be flagged.
+      const findings = findingsFor(result, 'good-api.ts').filter((f) => f.kind === 'hallucinated-api');
+      expect(findings).toHaveLength(0);
+    });
   });
 
   it('does not cross-contaminate findings between fixture files', () => {

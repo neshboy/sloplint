@@ -88,6 +88,7 @@ Be honest about what this MVP does *not* do:
 - Alias tracking for the API check is intentionally simple and per-file: it does not do full scope analysis, so shadowed variables, re-exported aliases, or `require('fs').someMethod()` used through several layers of indirection may not be tracked correctly. Direct `require('fs').method()` chains and single-level local aliases are supported.
 - Only `.js`/`.jsx`/`.ts`/`.tsx` files are parsed. Files that fail to parse are reported as a `parse-error` finding rather than crashing the whole scan, but they aren't otherwise analyzed.
 - The dependency manifest check only looks at `package.json`; it doesn't cross-check lockfiles or actually resolve packages from `node_modules`.
+- **The hallucinated-API check's "known API surface" is built from runtime `Object.keys()`, so it only knows about values, never TypeScript types.** Explicit type-only imports (`import type { PathLike } from 'node:fs'`, or `import { type PathLike } from 'node:fs'`) are recognized via the AST's `importKind` and skipped. But an implicit type-only import written *without* the `type` keyword (e.g. `import { PathLike } from 'fs'`) is indistinguishable at the AST level from a real hallucinated value import, and may still be flagged as a false positive.
 
 ## Development
 

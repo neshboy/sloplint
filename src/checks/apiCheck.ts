@@ -91,10 +91,12 @@ export function checkHallucinatedApis(
         case 'ImportDeclaration': {
           const moduleSource = node.source.value;
           if (typeof moduleSource !== 'string') break;
+          if (node.importKind === 'type') break;
           for (const spec of node.specifiers) {
             if (spec.type === 'ImportDefaultSpecifier' || spec.type === 'ImportNamespaceSpecifier') {
               recordAlias(spec.local.name, moduleSource);
             } else if (spec.type === 'ImportSpecifier') {
+              if (spec.importKind === 'type') continue;
               const importedName =
                 spec.imported.type === 'Identifier' ? spec.imported.name : String(spec.imported.value);
               checkNamedBindings(moduleSource, [{ imported: importedName, node: spec }]);
